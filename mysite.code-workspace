@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "finalDJango",
+			"path": "../../../Mysite/finalDJango"
+		},
+		{
+			"name": "finalDJango-1",
+			"path": "../../../Mysite/finalDJango-1"
+		}
+	],
+	"settings": {}
+}
