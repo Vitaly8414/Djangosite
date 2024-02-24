@@ -7,4 +7,6 @@
   <p>Price: {{ product.price }}</p>
   <p>Quantity: {{ product.quantity }}</p>
   <p>Added Date: {{ product.added_date }}</p>
+  
+    <a href="{% url 'product_edit' pk=product.pk %}">Edit product</a>
 {% endblock %}
