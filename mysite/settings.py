@@ -31,6 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # django-insecure-ki)fobhh$=f(#0*5&8*(sdymua0f#p+!+%l-sgyxwy6kn%+a17
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 DEBUG = bool(os.environ.get("DEBUG"))
 
 SESSION_COOKIE_SECURE = True  
