@@ -38,7 +38,7 @@ CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1", 
-    "Vit8414.pythonanywhere.com",
+    "vvv8414.pythonanywhere.com",
     ]
 
 # Application definition
