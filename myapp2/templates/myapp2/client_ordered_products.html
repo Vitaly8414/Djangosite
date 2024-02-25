@@ -6,7 +6,7 @@
   {% if ordered_products %}
     <ul>
       {% for product in ordered_products %}
-        <li>{{ product.name }} - {{ product.price }}</li>
+        <li>{{ product.name }} - Price: ${{ product.price }}</li>
       {% endfor %}
     </ul>
   {% else %}

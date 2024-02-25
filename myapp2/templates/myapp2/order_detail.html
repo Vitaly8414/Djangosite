@@ -2,8 +2,12 @@
 
 {% block content %}
   <h2>Order Detail</h2>
-  <p>Products: {{ order.products }}</p>
-  <p>Total_amount: {{ order.total_amountn }}</p>
-  <p>Order_date: {{ order.order_date }}</p>
+  <p>Products:</p>
+  <ul>
+    {% for product in products %}
+      <li>{{ product.name }} - {{ product.price }}</li>
+    {% endfor %}
+  </ul>
+  <p>Total amount: {{ total_amount|floatformat:2 }}</p>
+  <p>Order date: {{ order.order_date }}</p>
 {% endblock %}
-

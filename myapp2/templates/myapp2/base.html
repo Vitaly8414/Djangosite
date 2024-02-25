@@ -12,19 +12,24 @@
         <ul>
             <li><a href="{% url 'client_list' %}">Clients</a></li>
             {% for client in clients %}
-                <li><a href="{% url 'client_detail' pk=client.pk %}">Client_detail</a></li>
+                <li><a href="{% url 'client_detail' pk=client.id pk=client.pk %}">Client_detail {{ client.name }} </a></li>
+                {% comment %} <li><a href="{% url 'client_detail' pk=client.pk %}">Client_detail</a></li> {% endcomment %}
+                <li><a href="{% url 'client_ordered_products' client_id=client.id days=7 %}">Client_ordered_products for {{ client.name }}</a></li>
             {% endfor %}
-            {% comment %} <li><a href="{% url 'client_form' %}">Client_forml</a></li> {% endcomment %}
-            <li><a href="{% url 'client_ordered_products' %}">Client_ordered_products</a></li>
-            <li><a href="{% url 'client_orders' %}">Client_orders</a></li>
+            {% comment %} <li><a href="{% url 'client_ordered_products' client_id=client.id days=7 %}">Client_ordered_products</a></li> {% endcomment %}
+            {% comment %} <li><a href="{% url 'client_orders' %}">Client_orders</a></li> {% endcomment %}
+            <a href="{% url 'client_orders' client_id=1 %}">Client Orders</a>
             <li><a href="{% url 'product_list' %}">Products</a></li>
-            <li><a href="{% url 'product_added' %}">Product_added</a></li>
             <li><a href="{% url 'add_product' %}">Add_product</a></li>
-            <li><a href="{% url 'product_detail' %}">Product_detail</a></li>
-            {% comment %} <li><a href="{% url 'product_form' %}">Product_form</a></li> {% endcomment %}
+            <li><a href="{% url 'product_added' %}">Product_added</a></li>
+            {% for product in products %}
+                <li><a href="{% url 'product_detail' pk=product.pk %}">Product_detail - {{ product.name }}</a></li>
+            {% endfor %}
             <li><a href="{% url 'order_list' %}">Orders</a></li>
-            <li><a href="{% url 'order_detail' %}">Order_detail</a></li>
-            {% comment %} <li><a href="{% url 'order_form' %}">Order_form</a></li> {% endcomment %}
+            {% comment %} <li><a href="{% url 'order_detail' %}">Order_detail</a></li> {% endcomment %}
+            {% for order in orders %}
+            <li><a href="{% url 'order_detail' pk=order.pk %}">Order Detail - {{ order.name }} </a><li>
+            {% endfor %}
             <li><a href="{% url 'error' %}">Error</a></li>
         </ul>
     </nav>
@@ -33,6 +38,8 @@
         {% block content %}
         {% endblock %}
     </div>
+</body>
+</html>
 
 </body>
 </html>

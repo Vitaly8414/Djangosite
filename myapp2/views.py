@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
 from django.forms import ValidationError
 from django.shortcuts import render, get_object_or_404, redirect
@@ -6,6 +7,7 @@ from .models import Client, Product, Order
 from .forms import ClientForm, ProductForm, OrderForm
 from django.utils import timezone
 from datetime import timedelta
+from django.db.models import Sum
 
 
 def handle_error(request, exception):
@@ -24,10 +26,8 @@ def handle_form(request, form_class, template_name, redirect_url, instance=None)
             form = form_class(instance=instance)
         return render(request, template_name, {"form": form})
     except ValidationError as ve:
-        # Обработка неверных данных формы
         return handle_error(request, ve)
     except Exception as e:
-        # Обработка других исключений
         return handle_error(request, e)
 
 def base(request):
@@ -109,16 +109,22 @@ def product_create(request):
 
 
 def add_product(request):
-    return handle_form(request, ProductForm, "myapp2/add_product.html", "myapp_2/product_added")
+    return handle_form(request, ProductForm, "myapp2/add_product.html", "product_added")
 
 
 def product_added(request):
     return render(request, "myapp2/product_added.html")
 
 
+# def product_edit(request, pk):
+#     product = get_object_or_404(Product, pk=pk)
+#     return handle_form(request, ProductForm, "myapp2/product_form.html", "product_detail/<int:pk>/", instance=product)
+
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return handle_form(request, ProductForm, "myapp2/product_form.html", "myapp_2/product_detail", instance=product)
+    # Генерируем URL для product_detail с помощью reverse
+    redirect_url = reverse('product_detail', kwargs={'pk': pk})
+    return handle_form(request, ProductForm, "myapp2/product_form.html", redirect_url, instance=product)
 
 
 def product_delete(request, pk):
@@ -152,7 +158,9 @@ def order_list(request):
 def order_detail(request, pk):
     try:
         order = get_object_or_404(Order, pk=pk)
-        return render(request, "myapp2/order_detail.html", {"order": order})
+        products = order.products.all()
+        total_amount = products.aggregate(total=Sum('price'))['total']
+        return render(request, "myapp2/order_detail.html", {"order": order, "products": products, "total_amount": total_amount})
     except Exception as e:
         return handle_error(request, e)
 
